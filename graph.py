@@ -5,7 +5,7 @@ def draw_node(event):
     #check if the new circle will overlap with any existing circles
     overlap = False
     for node_x, node_y in nodes:
-        if (x - node_x)**2 + (y - node_y)**2 <= (2 * node_radius)**2:  # check if distance <= sum of radius
+        if (x - node_x)**2 + (y - node_y)**2 <= (2 * node_radius)**2:  #check if distance <= sum of radius
             overlap = True
             break
     #draw the circle only if there's no overlap
@@ -45,16 +45,20 @@ def draw_edge_end(event):
 
 def activate_draw_node():
     canvas.bind("<Button-1>", draw_node)
+    canvas.unbind("<Button-3>")  #deactivate draw_edge
+    draw_node_button.config(relief=tk.SUNKEN)
+    draw_edge_button.config(relief=tk.RAISED)
 
 def activate_draw_edge():
-    canvas.bind("<Button-3>", draw_edge_start)
-    canvas.bind("<ButtonRelease-3>", draw_edge_end)
+    canvas.bind("<Button-1>", draw_edge_start)
+    canvas.bind("<ButtonRelease-1>", draw_edge_end)
+    canvas.unbind("<Button-3>")  # Deactivate draw_node
+    draw_edge_button.config(relief=tk.SUNKEN)
+    draw_node_button.config(relief=tk.RAISED)
 
 #create main window
 root = tk.Tk()
 root.title("Graph Editor")
-
-#set window size
 root.geometry("800x600")
 
 #create frame for buttons
@@ -62,24 +66,20 @@ button_frame = tk.Frame(root)
 button_frame.pack(side="top", fill="x")
 
 #create Draw Node button
-draw_node_button = tk.Button(button_frame, text="Draw Node", command=activate_draw_node)
+draw_node_button = tk.Button(button_frame, text="Draw Node", command=activate_draw_node, relief=tk.RAISED)
 draw_node_button.pack(side="left", padx=5, pady=5)
 
 #create Draw Edge button
-draw_edge_button = tk.Button(button_frame, text="Draw Edge", command=activate_draw_edge)
+draw_edge_button = tk.Button(button_frame, text="Draw Edge", command=activate_draw_edge, relief=tk.RAISED)
 draw_edge_button.pack(side="left", padx=5, pady=5)
 
 #create canvas
 canvas = tk.Canvas(root, bg="white")
 canvas.pack(fill="both", expand=True)
 
-##   NODE ASPECTS   
-#list to store the positions of nodes
+#### Node aspects
 nodes = []
-#radius of the node circle
 node_radius = 50
-#global variable to keep track of the starting node for drawing an edge
 start_node = None
 
-#start the GUI event loop
 root.mainloop()
