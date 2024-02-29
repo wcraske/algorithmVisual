@@ -1,4 +1,6 @@
 import tkinter as tk
+import random
+import math
 
 def draw_node(event):
     x, y = event.x, event.y
@@ -12,7 +14,14 @@ def draw_node(event):
     if not overlap:
         canvas.create_oval(x - node_radius, y - node_radius, x + node_radius, y + node_radius)
         nodes.append((x, y))
+        heuristics.append(random.randint(1, 50))  #assign random heuristic to the newly added node
     print("Nodes:", nodes)  #print nodes list after drawing a node
+    print("Heuristics:", heuristics)
+
+def calculate_distance(node1, node2):
+    x1, y1 = node1
+    x2, y2 = node2
+    return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
 
 def draw_edge_start(event):
     global start_node
@@ -21,7 +30,7 @@ def draw_edge_start(event):
     min_dist = float('inf')
     closest_node = None
     for node_x, node_y in nodes:
-        dist = (x - node_x)**2 + (y - node_y)**2
+        dist = calculate_distance((x, y), (node_x, node_y))
         if dist < min_dist:
             min_dist = dist
             closest_node = (node_x, node_y)
@@ -34,7 +43,7 @@ def draw_edge_end(event):
     min_dist = float('inf')
     closest_node = None
     for node_x, node_y in nodes:
-        dist = (x - node_x)**2 + (y - node_y)**2
+        dist = calculate_distance((x, y), (node_x, node_y))
         if dist < min_dist:
             min_dist = dist
             closest_node = (node_x, node_y)
@@ -71,6 +80,16 @@ def activate_run_algorithm():
     run_algorithm_button.config(relief=tk.SUNKEN)
     draw_node_button.config(relief=tk.RAISED)
     draw_edge_button.config(relief=tk.RAISED)
+    calculate_costs()
+
+def calculate_costs():
+    global costs
+    costs = [[0] * len(nodes) for _ in range(len(nodes))]
+    for i in range(len(nodes)):
+        for j in range(len(nodes)):
+            if i != j:
+                costs[i][j] = calculate_distance(nodes[i], nodes[j])
+    print("Costs:", costs)
 
 #create main window
 root = tk.Tk()
@@ -99,10 +118,12 @@ canvas.pack(fill="both", expand=True)
 
 ####node aspects
 nodes = []
+heuristics = []  #stores heuristics for each node
 node_radius = 50
 start_node = None
 
 ####edge aspects
 edges = []
+costs = []
 
 root.mainloop()
