@@ -50,13 +50,12 @@ def draw_edge_end(event):
         start_node = None
     print("Edges:", edges)  #print edges list after drawing an edge
 
-
-
 def activate_draw_node():
     canvas.bind("<Button-1>", draw_node)
     canvas.unbind("<Button-3>")  #deactivate draw_edge
     draw_node_button.config(relief=tk.SUNKEN)
     draw_edge_button.config(relief=tk.RAISED)
+    run_algorithm_button.config(relief=tk.RAISED)  #reactivate run_algorithm_button
 
 def activate_draw_edge():
     canvas.bind("<Button-1>", draw_edge_start)
@@ -64,6 +63,14 @@ def activate_draw_edge():
     canvas.unbind("<Button-3>")  #deactivate draw_node
     draw_edge_button.config(relief=tk.SUNKEN)
     draw_node_button.config(relief=tk.RAISED)
+    run_algorithm_button.config(relief=tk.RAISED)  #reactivate run_algorithm_button
+
+def activate_run_algorithm():
+    canvas.unbind("<Button-1>")  #deactivate draw_node
+    canvas.unbind("<ButtonRelease-1>")  #deactivate draw_edge
+    run_algorithm_button.config(relief=tk.SUNKEN)
+    draw_node_button.config(relief=tk.RAISED)
+    draw_edge_button.config(relief=tk.RAISED)
 
 #create main window
 root = tk.Tk()
@@ -81,6 +88,10 @@ draw_node_button.pack(side="left", padx=5, pady=5)
 #create draw edge button
 draw_edge_button = tk.Button(button_frame, text="Draw Edge", command=activate_draw_edge, relief=tk.RAISED)
 draw_edge_button.pack(side="left", padx=5, pady=5)
+
+#create run algorithm button
+run_algorithm_button = tk.Button(button_frame, text="Run Algorithm", command=activate_run_algorithm, relief=tk.RAISED)
+run_algorithm_button.pack(side="left", padx=5, pady=5)
 
 #create canvas
 canvas = tk.Canvas(root, bg="white")
