@@ -1,5 +1,4 @@
 import tkinter as tk
-import random
 import math
 
 def draw_node(event):
@@ -7,21 +6,15 @@ def draw_node(event):
     #check if the new circle will overlap with any existing circles
     overlap = False
     for node_x, node_y in nodes:
-        if (x - node_x)**2 + (y - node_y)**2 <= (2 * node_radius)**2:  #check if distance <= sum of radius
+        if (x - node_x) ** 2 + (y - node_y) ** 2 <= (2 * node_radius) ** 2:  #check if distance <= sum of radius
             overlap = True
             break
     #draw the circle only if there is no overlap
     if not overlap:
         canvas.create_oval(x - node_radius, y - node_radius, x + node_radius, y + node_radius)
         nodes.append((x, y))
-        heuristics.append(random.randint(1, 50))  #assign random heuristic to the newly added node
     print("Nodes:", nodes)  #print nodes list after drawing a node
-    print("Heuristics:", heuristics)
 
-def calculate_distance(node1, node2):
-    x1, y1 = node1
-    x2, y2 = node2
-    return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
 
 def draw_edge_start(event):
     global start_node
@@ -30,11 +23,12 @@ def draw_edge_start(event):
     min_dist = float('inf')
     closest_node = None
     for node_x, node_y in nodes:
-        dist = calculate_distance((x, y), (node_x, node_y))
+        dist = (x - node_x) ** 2 + (y - node_y) ** 2
         if dist < min_dist:
             min_dist = dist
             closest_node = (node_x, node_y)
     start_node = closest_node
+
 
 def draw_edge_end(event):
     global start_node
@@ -43,7 +37,7 @@ def draw_edge_end(event):
     min_dist = float('inf')
     closest_node = None
     for node_x, node_y in nodes:
-        dist = calculate_distance((x, y), (node_x, node_y))
+        dist = (x - node_x) ** 2 + (y - node_y) ** 2
         if dist < min_dist:
             min_dist = dist
             closest_node = (node_x, node_y)
@@ -59,12 +53,14 @@ def draw_edge_end(event):
         start_node = None
     print("Edges:", edges)  #print edges list after drawing an edge
 
+
 def activate_draw_node():
     canvas.bind("<Button-1>", draw_node)
     canvas.unbind("<Button-3>")  #deactivate draw_edge
     draw_node_button.config(relief=tk.SUNKEN)
     draw_edge_button.config(relief=tk.RAISED)
     run_algorithm_button.config(relief=tk.RAISED)  #reactivate run_algorithm_button
+
 
 def activate_draw_edge():
     canvas.bind("<Button-1>", draw_edge_start)
@@ -74,22 +70,33 @@ def activate_draw_edge():
     draw_node_button.config(relief=tk.RAISED)
     run_algorithm_button.config(relief=tk.RAISED)  #reactivate run_algorithm_button
 
+
 def activate_run_algorithm():
     canvas.unbind("<Button-1>")  #deactivate draw_node
     canvas.unbind("<ButtonRelease-1>")  #deactivate draw_edge
     run_algorithm_button.config(relief=tk.SUNKEN)
     draw_node_button.config(relief=tk.RAISED)
     draw_edge_button.config(relief=tk.RAISED)
-    calculate_costs()
-
-def calculate_costs():
-    global costs
-    costs = [[0] * len(nodes) for _ in range(len(nodes))]
+    print("Euclidean Distances:")
     for i in range(len(nodes)):
-        for j in range(len(nodes)):
-            if i != j:
-                costs[i][j] = calculate_distance(nodes[i], nodes[j])
-    print("Costs:", costs)
+        for j in range(i+1, len(nodes)):
+            dist = euclidean_distance(nodes[i], nodes[j])
+            print(f"Node {i+1} to Node {j+1}: {dist}")
+
+    print("\nManhattan Distances:")
+    for i in range(len(nodes)):
+        for j in range(i+1, len(nodes)):
+            dist = manhattan_distance(nodes[i], nodes[j])
+            print(f"Node {i+1} to Node {j+1}: {dist}")
+
+
+def manhattan_distance(node1, node2):
+    return abs(node1[0] - node2[0]) + abs(node1[1] - node2[1])
+
+
+def euclidean_distance(node1, node2):
+    return math.sqrt((node1[0] - node2[0]) ** 2 + (node1[1] - node2[1]) ** 2)
+
 
 #create main window
 root = tk.Tk()
@@ -116,14 +123,12 @@ run_algorithm_button.pack(side="left", padx=5, pady=5)
 canvas = tk.Canvas(root, bg="white")
 canvas.pack(fill="both", expand=True)
 
-####node aspects
+#node aspects
 nodes = []
-heuristics = []  #stores heuristics for each node
-node_radius = 50
+node_radius = 30
 start_node = None
 
-####edge aspects
+#edge aspects
 edges = []
-costs = []
 
 root.mainloop()
