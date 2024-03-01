@@ -83,8 +83,12 @@ def activate_run_algorithm():
     path = astar(nodes, edges, start_index, goal_index)
     if path:
         print("Best path found:", path)
+        for node_index in path:
+            x, y = nodes[node_index]
+        
     else:
         print("No path found.")
+    
 
 def manhattan_distance(node1, node2):
     return abs(node1[0] - node2[0]) + abs(node1[1] - node2[1])
@@ -119,6 +123,7 @@ def astar(nodes, edges, start, goal):
                 g_score[neighbor] = tentative_g_score
                 f_score[neighbor] = g_score[neighbor] + heuristic(nodes[neighbor], nodes[goal])
                 heapq.heappush(open_set, (f_score[neighbor], neighbor))
+    
     return None
 
 def get_neighbors(edges, node):
