@@ -1,6 +1,7 @@
 import tkinter as tk
 import math
 import heapq
+import time
 
 def draw_node(event):
     x, y = event.x, event.y
@@ -15,7 +16,6 @@ def draw_node(event):
         canvas.create_text(x, y, text=str(node_index))  #display the index inside the bubble
         nodes.append((x, y))
     print("Nodes:", nodes)
-
 
 
 def draw_edge_start(event):
@@ -85,16 +85,22 @@ def activate_run_algorithm():
         print("Best path found:", path)
         for node_index in path:
             x, y = nodes[node_index]
+            canvas.create_oval(x - node_radius, y - node_radius, x + node_radius, y + node_radius, fill="green")
+            canvas.create_text(x, y, text=str(node_index))  #display the index inside the bubble
+            root.update()
+            time.sleep(1)
         
     else:
         print("No path found.")
-    
+
 
 def manhattan_distance(node1, node2):
     return abs(node1[0] - node2[0]) + abs(node1[1] - node2[1])
 
+
 def euclidean_distance(node1, node2):
     return math.sqrt((node1[0] - node2[0]) ** 2 + (node1[1] - node2[1]) ** 2)
+
 
 def reconstruct_path(came_from, current):
     total_path = [current]
@@ -102,6 +108,7 @@ def reconstruct_path(came_from, current):
         current = came_from[current]
         total_path.insert(0, current)
     return total_path
+
 
 def astar(nodes, edges, start, goal):
     open_set = [(0, start)] #priority queue as a heap for potential nodes
@@ -116,6 +123,10 @@ def astar(nodes, edges, start, goal):
         if current == goal:
             return reconstruct_path(came_from, current)
         
+        canvas.create_oval(nodes[current][0] - node_radius, nodes[current][1] - node_radius, nodes[current][0] + node_radius, nodes[current][1] + node_radius, fill="yellow")
+        root.update()
+        time.sleep(1)
+        
         for neighbor in get_neighbors(edges, current):
             tentative_g_score = g_score[current] + distance(nodes[current], nodes[neighbor])
             if tentative_g_score < g_score[neighbor]:
@@ -126,6 +137,7 @@ def astar(nodes, edges, start, goal):
     
     return None
 
+
 def get_neighbors(edges, node):
     neighbors = []
     for edge in edges:
@@ -135,11 +147,14 @@ def get_neighbors(edges, node):
             neighbors.append(edge[0])
     return neighbors
 
+
 def distance(node1, node2):
     return euclidean_distance(node1, node2)
 
+
 def heuristic(node1, node2):
     return euclidean_distance(node1, node2)
+
 
 root = tk.Tk()
 root.title("Graph Editor")
