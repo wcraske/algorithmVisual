@@ -11,8 +11,11 @@ def draw_node(event):
             break
     if not overlap:
         canvas.create_oval(x - node_radius, y - node_radius, x + node_radius, y + node_radius)
+        node_index = len(nodes) #calculate the index of the node
+        canvas.create_text(x, y, text=str(node_index))  #display the index inside the bubble
         nodes.append((x, y))
     print("Nodes:", nodes)
+
 
 
 def draw_edge_start(event):
