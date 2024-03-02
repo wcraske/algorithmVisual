@@ -16,3 +16,5 @@ Geeksforgeeks (2024, Februrary 7th). A* Search Algorithm. Geeksforgeeks. https:/
 Nicholas Swift. (2017, February 27th). Easy A* (star) Pathfinding. Medium. https://medium.com/@nicholas.w.swift/easy-a-star-pathfinding-7e6689c7f7b2
 
 Python. (n.d.). 3.12.2 Heap queue algorithm — Python interface to Tcl/Tk. Python. https://docs.python.org/3/library/tkinter.htmlhttps://docs.python.org/3/library/heapq.html
+
+Angad Kahlon's portion - a python based Grassfire Algorithm that would work on a graph instead of the usual grid, Grassfire usually runs on.
