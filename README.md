@@ -10,6 +10,9 @@ In the algorithm.py is the python code for the distance explorer version of the 
 In the plot_weighted_graph.py is the example of how the algorithm in algorithm.py works on the graph built with networkX, and the visualization by matplotlib.
 Run the GUI.py to see the visualization of Dijkstra's shortest path found on a more complex version of the graph 
 
+Angad Kahlon's portion - a python based Grassfire Algorithm that would work on a graph instead of the usual grid, Grassfire usually runs on. Everything is one file, with the program asking for input about the edges, and the goal node you would like to reach.
+
+
 # References (APA Format)
 
 Python. (n.d.). tkinter — Python interface to Tcl/Tk. Python. https://docs.python.org/3/library/tkinter.html
@@ -22,13 +25,18 @@ Nicholas Swift. (2017, February 27th). Easy A* (star) Pathfinding. Medium. https
 
 Python. (n.d.). 3.12.2 Heap queue algorithm — Python interface to Tcl/Tk. Python. https://docs.python.org/3/library/tkinter.htmlhttps://docs.python.org/3/library/heapq.html
 
-Angad Kahlon's portion - a python based Grassfire Algorithm that would work on a graph instead of the usual grid, Grassfire usually runs on.
-
-#References (APA Format) 
+# Angad Kahlon's portion
+# References (APA Format) 
 
 Animating the Grassfire path-planning algorithm. (2017, December 31). Nrsyed.com. https://nrsyed.com/2017/12/30/animating-the-grassfire-path-planning-algorithm/
 
+GfG. (2016, September 22). Deque in Python. GeeksforGeeks; GeeksforGeeks. https://www.geeksforgeeks.org/deque-in-python/
+
 NeuralNine. (2023). Graph Search Visualization in Python (BFS and DFS) [YouTube Video]. In YouTube. https://www.youtube.com/watch?v=7XVTnCrWDPY
+
+Real Python. (2021, August 23). Python’s deque: Implement Efficient Queues and Stacks. Realpython.com; Real Python. https://realpython.com/python-deque/
+
+tridentzx. (2024). For Dijkstra’s algorithm, what would be a way to keep track of and store the vertices that each shortest path contains? Stack Overflow. https://stackoverflow.com/questions/70179455/for-dijkstras-algorithm-what-would-be-a-way-to-keep-track-of-and-store-the-ver
 
 # Ngan's part
 # References (APA Format)
