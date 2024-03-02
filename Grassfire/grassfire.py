@@ -26,6 +26,24 @@ def grassfire(graph, start_node):
     
     return distance
 
-
-
-
+graph = Graph()
+print("\n")
+print("Welcome to the Grassfire Algorithm Implementation on a Graph Data Structure!")
+print("Important Info: The start node is always 0!")
+print("\n")
+num = int(input("Enter in the number of edges in the graph: "))
+print("\n")
+while num > 0:
+    vertex1 = int(input("Enter in the first vertex of the edge: "))
+    vertex2 = int(input("Enter in the second vertex of the edge: "))
+    print("\n")
+    graph.addEdge(vertex1, vertex2)
+    num = num - 1
+startNode = 0
+distances = graph.grassfire(startNode)
+dis = distances[0]
+predes = distances[1]
+print("Distances from start node", startNode, ":", dis) 
+goalNode = int(input("Enter in the goal vertex number: "))
+path = graph.reconstruct_path(startNode, goalNode, predes)
+print("Path from start node", startNode, "to node", goalNode, ":", path)
