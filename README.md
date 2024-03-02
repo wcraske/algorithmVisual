@@ -5,6 +5,11 @@ By implementing the python library tkinter, we are able to create a graphical in
 A short tutorial, click "draw nodes" then place as many nodes as you want. the first node is the start node, and the last node is the goal node.
 Clicking "draw edges" then pressing and holding your mouse to bring it to the nodes you'd like to connect connects them. 
 
+Ngan Phan's part - a python based Dijkstra's algorithm that takes weighted graphs built by networkX library as inputs and explore the shortest distances from each node in the graph to the goal node.
+In the algorithm.py is the python code for the distance explorer version of the algorithm that works on weighted graphs
+In the plot_weighted_graph.py is the example of how the algorithm in algorithm.py works on the graph built with networkX, and the visualization by matplotlib
+Run the GUI.py to see the visualization of Dijkstra's shortest path found on a more complex version of the graph 
+
 # References (APA Format)
 
 Python. (n.d.). tkinter — Python interface to Tcl/Tk. Python. https://docs.python.org/3/library/tkinter.html
@@ -24,5 +29,6 @@ Angad Kahlon's portion - a python based Grassfire Algorithm that would work on a
 Animating the Grassfire path-planning algorithm. (2017, December 31). Nrsyed.com. https://nrsyed.com/2017/12/30/animating-the-grassfire-path-planning-algorithm/
 
 NeuralNine. (2023). Graph Search Visualization in Python (BFS and DFS) [YouTube Video]. In YouTube. https://www.youtube.com/watch?v=7XVTnCrWDPY
+
 
 ‌
