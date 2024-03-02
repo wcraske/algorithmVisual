@@ -7,6 +7,7 @@ An example using Graph as a weighted network.
 """
 import matplotlib.pyplot as plt
 import networkx as nx
+from algorithm import distance_calculator
 
 G = nx.Graph()
 
@@ -19,6 +20,10 @@ G.add_edge("a", "d", weight=3)
 G.add_edge("b", "g", weight=4)
 G.add_edge("g", "c", weight=5)
 G.add_edge("b", "d", weight=1)
+
+# Calculate the distance from node "a" to all other nodes
+distance = distance_calculator(G, "a")
+print(distance)
 
 elarge = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] > 5]
 esmall = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] <= 5]
