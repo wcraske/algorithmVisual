@@ -6,8 +6,8 @@ A short tutorial, click "draw nodes" then place as many nodes as you want. the f
 Clicking "draw edges" then pressing and holding your mouse to bring it to the nodes you'd like to connect connects them. 
 
 Ngan Phan's part - a python based Dijkstra's algorithm that takes weighted graphs built by networkX library as inputs and explore the shortest distances from each node in the graph to the goal node.
-In the algorithm.py is the python code for the distance explorer version of the algorithm that works on weighted graphs
-In the plot_weighted_graph.py is the example of how the algorithm in algorithm.py works on the graph built with networkX, and the visualization by matplotlib
+In the algorithm.py is the python code for the distance explorer version of the algorithm that works on weighted graphs.
+In the plot_weighted_graph.py is the example of how the algorithm in algorithm.py works on the graph built with networkX, and the visualization by matplotlib.
 Run the GUI.py to see the visualization of Dijkstra's shortest path found on a more complex version of the graph 
 
 # References (APA Format)
