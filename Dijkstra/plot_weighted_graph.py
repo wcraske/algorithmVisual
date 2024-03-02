@@ -25,6 +25,8 @@ G.add_edge("b", "d", weight=1)
 distance = distance_calculator(G, "a")
 print(distance)
 
+# Draw the graph
+
 elarge = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] > 5]
 esmall = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] <= 5]
 
