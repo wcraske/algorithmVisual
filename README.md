@@ -30,5 +30,14 @@ Animating the Grassfire path-planning algorithm. (2017, December 31). Nrsyed.com
 
 NeuralNine. (2023). Graph Search Visualization in Python (BFS and DFS) [YouTube Video]. In YouTube. https://www.youtube.com/watch?v=7XVTnCrWDPY
 
+# Ngan's part
+# References (APA Format)
+Embedding a Matplotlib Graph into a Tkinter application. (n.d.). Www.youtube.com. Retrieved March 2, 2024, from https://youtu.be/lVTC8CvScQo?si=h4WM9ZC_m8UCwhUc
+Python. (n.d.). tkinter — Python interface to Tcl/Tk. Python. https://docs.python.org/3/library/tkinter.html
+Geeksforgeeks (2023, November 9th). Python GUI – tkinter. Geeksforgeeks. https://www.geeksforgeeks.org/python-gui-tkinter/
+
+‌
+
+
 
 ‌
