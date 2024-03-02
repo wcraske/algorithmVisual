@@ -7,10 +7,12 @@ Clicking "draw edges" then pressing and holding your mouse to bring it to the no
 
 # References (APA Format)
 
-Python. (n.d.). 3.12.2 Documentation » The Python Standard Library » Graphical User Interfaces with Tk » tkinter — Python interface to Tcl/Tk. Python. https://docs.python.org/3/library/tkinter.html
+Python. (n.d.). tkinter — Python interface to Tcl/Tk. Python. https://docs.python.org/3/library/tkinter.html
 
 Geeksforgeeks (2023, November 9th). Python GUI – tkinter. Geeksforgeeks. https://www.geeksforgeeks.org/python-gui-tkinter/
 
 Geeksforgeeks (2024, Februrary 7th). A* Search Algorithm. Geeksforgeeks. https://www.geeksforgeeks.org/a-search-algorithm/
 
 Nicholas Swift. (2017, February 27th). Easy A* (star) Pathfinding. Medium. https://medium.com/@nicholas.w.swift/easy-a-star-pathfinding-7e6689c7f7b2
+
+Python. (n.d.). 3.12.2 Heap queue algorithm — Python interface to Tcl/Tk. Python. https://docs.python.org/3/library/tkinter.htmlhttps://docs.python.org/3/library/heapq.html
