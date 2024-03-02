@@ -18,3 +18,11 @@ Nicholas Swift. (2017, February 27th). Easy A* (star) Pathfinding. Medium. https
 Python. (n.d.). 3.12.2 Heap queue algorithm — Python interface to Tcl/Tk. Python. https://docs.python.org/3/library/tkinter.htmlhttps://docs.python.org/3/library/heapq.html
 
 Angad Kahlon's portion - a python based Grassfire Algorithm that would work on a graph instead of the usual grid, Grassfire usually runs on.
+
+#References (APA Format) 
+
+Animating the Grassfire path-planning algorithm. (2017, December 31). Nrsyed.com. https://nrsyed.com/2017/12/30/animating-the-grassfire-path-planning-algorithm/
+
+NeuralNine. (2023). Graph Search Visualization in Python (BFS and DFS) [YouTube Video]. In YouTube. https://www.youtube.com/watch?v=7XVTnCrWDPY
+
+‌
