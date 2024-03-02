@@ -20,6 +20,10 @@ def grassfire(graph, start_node):
                 visited[n] = True
                 distance[n] = distance[current_node] + 1
 
+    for x in distance:
+        if distance[x] == -1:
+            distance[x] = "Not possible to reach from start node"
+    
     return distance
 
 
