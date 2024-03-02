@@ -26,6 +26,18 @@ def grassfire(graph, start_node):
     
     return distance
 
+    def reconstruct_path(self, startNode, goalNode, predecessor):
+        path = []
+        current_node = goalNode
+        while current_node is not False:
+            path.append(current_node)
+            current_node = predecessor[current_node]
+        path.reverse()
+        if path[0] == startNode:
+            return path
+        else:
+            return "No path from start node to goal node!"
+
 graph = Graph()
 print("\n")
 print("Welcome to the Grassfire Algorithm Implementation on a Graph Data Structure!")
