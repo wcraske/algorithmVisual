@@ -1,9 +1,10 @@
+import heapq
+import time
 import tkinter as tk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 import networkx as nx
-from algorithm import distance_calculator
-import numpy as np
+from algorithm import reconstruct_path
 
 # Create a weighted graph function
 def drawGraph(fig):
@@ -20,13 +21,13 @@ def drawGraph(fig):
     G.add_edge("b", "d", weight=1)
     G.add_edge("h", "f", weight=1)
     G.add_edge("h", "d", weight=0.5)
-    G.add_edge("h", "e", weight=0.5)
+    G.add_edge("h", "c", weight=0.5)
 
     elarge = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] > 5]
     esmall = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] <= 5]
 
-    pos = nx.circular_layout(G, scale=1, center=(0, 0))
-  # positions for all nodes
+    pos = nx.spring_layout(G, seed=7, k = 0.5)  # positions for all nodes
+ 
 
     fig.clf()
     ax = fig.add_subplot(111)
@@ -57,7 +58,7 @@ def highlightPath(G, path):
     ax = fig.add_subplot(111)
     
     # Draw the whole graph as before
-    pos = nx.circular_layout(G, scale=1, center=(0, 0))
+    pos = nx.spring_layout(G, seed=7, k = 0.5)  # positions for all nodes - seed for reproducibility
 
     nx.draw_networkx_nodes(G, pos, node_size=700, ax=ax) # nodes
     nx.draw_networkx_labels(G, pos, font_size=20, font_family="sans-serif", ax=ax) # node labels
@@ -76,22 +77,71 @@ def highlightPath(G, path):
     # Update canvas
     canvas.draw()
 
-
-def onRunAlgorithm(G):
-    # Assuming 'a' is the source and 'f' is the target for the demonstration
-    source = 'b'
-    target = 'e'
+def updateGraph(G, current_node, distance):
+    # Clear and redraw the graph with the current node highlighted
+    fig.clf()
+    ax = fig.add_subplot(111)
     
-    # Run Dijkstra's algorithm to find the shortest path
-    shortest_path = nx.dijkstra_path(G, source=source, target=target, weight='weight')
-    # Convert the result into a string to display
-    result_text = "Result: " + " -> ".join(shortest_path)
-    
-    # Update the result label
-    result.config(text=result_text)
+    # Draw the whole graph as before
+    pos = nx.spring_layout(G, seed=7, k = 0.5)  # positions for all nodes - seed for reproducibility
 
-    # Highlight the shortest path in the graph
-    highlightPath(G, shortest_path)
+    nx.draw_networkx_nodes(G, pos, node_size=700, ax=ax) # nodes
+    nx.draw_networkx_labels(G, pos, font_size=20, font_family="sans-serif", ax=ax) # node labels
+    nx.draw_networkx_edges(G, pos, edgelist=G.edges, width=4, alpha=0.5, edge_color="grey", style="solid", ax=ax) # edges
+
+    # draw the visited nodes with a different color
+    visited_nodes = [node for node in distance if distance[node] != float("inf")]
+    nx.draw_networkx_nodes(G, pos, nodelist=visited_nodes, node_color='green', node_size=500, ax=ax)
+
+    # Draw the current node with a different color
+    nx.draw_networkx_nodes(G, pos, nodelist=[current_node], node_color='red', node_size=500, ax=ax)
+    nx.draw_networkx_labels(G, pos, font_size=20, font_family="sans-serif", ax=ax)
+    ax.margins(0.08)
+    ax.axis("off")
+    
+    # Update canvas
+    canvas.draw()
+
+def onRunAlgorithmStep(G, start, goal, queue, distance, predecessor, current_node=None):
+    if not queue:
+        # Algorithm finished, trace and highlight the shortest path
+        shortest_path = reconstruct_path(predecessor, start, goal)
+        result_text = "Result: " + " -> ".join(shortest_path)
+        result.config(text=result_text, fg="green")
+        highlightPath(G, shortest_path)
+        return
+
+    if current_node:
+        # Process current node, update graph visualization
+        updateGraph(G, current_node, distance)
+        m.update()  # Make sure the update is reflected in the GUI
+        time.sleep(0.5)  # Delay to allow observation, adjust as needed
+
+    # Proceed with algorithm, schedule next step
+    current_distance, current_node = heapq.heappop(queue)
+    if current_distance <= distance[current_node]:
+        for neighbor, weight in G[current_node].items():
+            distance_through_current = current_distance + weight["weight"]
+            if distance_through_current < distance[neighbor]:
+                distance[neighbor] = distance_through_current
+                predecessor[neighbor] = current_node
+                heapq.heappush(queue, (distance_through_current, neighbor))
+    m.after(1000, lambda: onRunAlgorithmStep(G, start, goal, queue, distance, predecessor, current_node))
+
+def onRunAlgorithm(G, start, goal):
+    if start == "" or goal == "":
+        result.config(text="Please enter start and goal nodes", fg="red")
+        return
+
+    # Initialize algorithm state
+    queue = [(0, start)]
+    distance = {node: float("inf") for node in G.nodes}
+    distance[start] = 0
+    predecessor = {node: None for node in G.nodes}
+
+    # Start step-by-step execution
+    onRunAlgorithmStep(G, start, goal, queue, distance, predecessor)
+
     
 
 # Tkinter GUI initialization
@@ -116,6 +166,20 @@ canvas_widget.pack()
 canvas_widget.config(highlightthickness=2, highlightbackground="black")
 canvas_frame.pack(side="top", fill="both", expand=True)
 
+#input frame
+start_node = tk.StringVar()
+goal_node = tk.StringVar()
+
+input_frame = tk.Frame(m)
+input_frame.pack(side="top", fill="x")
+start = tk.Label(input_frame, text="Start Node: ", font=("Arial", 14))
+start_entry = tk.Entry(input_frame, font=("Arial", 14), textvariable=start_node)
+start.grid(row=0, column=0)
+start_entry.grid(row=0, column=1)
+goal = tk.Label(input_frame, text="Goal Node: ", font=("Arial", 14))
+goal_entry = tk.Entry(input_frame, font=("Arial", 14), textvariable=goal_node)
+goal.grid(row=0, column=2)
+goal_entry.grid(row=0, column=3)
 
 
 # Result
@@ -129,7 +193,7 @@ button_frame = tk.Frame(m)
 
 draw = tk.Button(button_frame, text="Draw Graph", command=onDrawGraph)
 draw.grid(row=0, column=0)  # Place button in the middle column
-run = tk.Button(button_frame, text="Run Algorithm", command=lambda: onRunAlgorithm(drawGraph(fig)))
+run = tk.Button(button_frame, text="Run Algorithm", command=lambda: onRunAlgorithm(drawGraph(fig), start_node.get(), goal_node.get()))
 run.grid(row=0, column=1)
 
 button_frame.pack(side="top")

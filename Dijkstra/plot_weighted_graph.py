@@ -8,6 +8,8 @@ An example using Graph as a weighted network.
 import matplotlib.pyplot as plt
 import networkx as nx
 from algorithm import distance_calculator
+from algorithm import reconstruct_path
+from algorithm import dijkstra
 
 G = nx.Graph()
 
@@ -22,9 +24,9 @@ G.add_edge("g", "c", weight=5)
 G.add_edge("b", "d", weight=1)
 
 # Calculate the distance from node "a" to all other nodes
-distance = distance_calculator(G, "a")
-print(distance)
-
+path = dijkstra(G, "a", "b")
+print(path)
+print("Distance from a to d:", path[1])
 # Draw the graph
 
 elarge = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] > 5]
